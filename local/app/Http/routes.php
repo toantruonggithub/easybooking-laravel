@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/about', function () {
+    return '<h1>About Easybooking Project</h1>';
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -27,5 +31,15 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+    // Test
+    Route::get('/authtest', array('middleware' => 'auth.basic', function()
+    {
+        return 'You are Welcome!';
+    }));
+    
+    //Versioning
+    Route::group(array('prefix' => 'api/v1', 'middleware' => 'auth.basic'), function()
+    {
+        Route::resource('store', 'StoreController');
+    });
 });
